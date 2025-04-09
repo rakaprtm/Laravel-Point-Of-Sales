@@ -26,10 +26,11 @@
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" name="password" class="form-control" required>
                             </div>
-
+                        <div align="center">
                             <button type="submit" class="btn btn-primary">Save</button>
-                            <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
+                            <a href="{{ route('users.index') }}" class="btn btn-danger">Cancel</a>
                             <a href="{{ url()->previous() }}" class="btn btn-warning">Back</a>
+                        </div>
                         </form>
 
                     </div>

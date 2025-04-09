@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">New Product</h5>
+                    <h5 align="center" class="card-title">New Product</h5>
                     <form
                         action="{{ route('products.store') }}"
                         method="post"
@@ -89,12 +89,7 @@
                             <label for="" class="col-form-label">Status</label>
                             <br />
                             publish
-                            <input
-                                type="radio"
-                                name="is_active"
-                                value="1"
-                                checked
-                            />
+                            <input type="radio" name="is_active" value="1" checked/>
                             Draft
                             <input type="radio" name="is_active" value="0" />
                         </div>

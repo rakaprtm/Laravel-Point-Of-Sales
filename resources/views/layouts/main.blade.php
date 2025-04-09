@@ -133,19 +133,56 @@
         @include('sweetalert::alert', ['cdn' =>
         "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
 
-        <script>
-            $("#category_id").change(function () {
-                alert("asd");
-                let cat_id = $(this).val();
-                $.ajax({
-                    url: "/get-product/" + cat_id,
-                    type: "GET",
-                    dataType: "json",
-                    success: function (resp) {
-                        console.log("response", resp);
-                    },
+      <script>
+    $("#category_id").change(function () {
+        let cat_id = $(this).val();
+        let option = `<option value="">Choose Product</option>`;
+        $.ajax({
+            url: "/get-product/" + cat_id,
+            type: "GET",
+            dataType: "json",
+            success: function (resp) {
+                $("#product_id").empty();
+                $.each(resp.data, function(index, value) {
+                    option += `<option value="${value.id}" data-name="${value.product_name}" data-price="${value.product_price}"
+                    data-photo="${value.product_photo}">${value.product_name}</option>`;
                 });
-            });
-        </script>
+                $("#product_id").html(option);
+            }
+        });
+    });
+
+    $(".add-row").click(function () {
+    let tbody = $("table tbody");
+
+    if ($("#category_id").val() === "") {
+        alert("Please select category");
+        return false;
+    }
+
+    if ($("#product_id").val() === "") {
+        alert("Please select product");
+        return false;
+    }
+
+    let selectedOption = $("#product_id option:selected");
+    let productName = selectedOption.data("name");
+    let productPrice = selectedOption.data("price");
+    let productImage = selectedOption.data("photo");
+
+
+
+   let newRow = "<tr>";
+    newRow += `<td><img src="/storage/${productImage}" width="60" height="60" alt="${productName}" /></td>`;
+    newRow += `<td>${productName}</td>`;
+    newRow += `<td><input type="number" class="form-control" name="qty[]" value="1" min="1" /></td>`;
+    newRow += `<td><input type="number" class="form-control" name="price[]" value="${productPrice}" readonly /></td>`;
+    newRow += "</tr>";
+
+    tbody.prepend(newRow);
+});
+</script>
     </body>
 </html>
+
+

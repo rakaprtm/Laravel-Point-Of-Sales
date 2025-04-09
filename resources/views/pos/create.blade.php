@@ -37,12 +37,9 @@
                                 <option value=""></option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <button class="btn btn-primary" type="submit">
-                                Save
-                            </button>
-                            <button class="btn btn-danger" type="reset">
-                                Cancel
+                        <div align="right" class="mb-3">
+                            <button class="btn btn-primary add-row" type="button">
+                                Add To Chart
                             </button>
                         </div>
                     </form>
@@ -51,7 +48,7 @@
         </div>
         <div class="col-lg-7">
             <div class="card">
-                <div class="card-body">
+                <div align="center" class="card-body">
                     <h5 class="card-title">Order Basket</h5>
                     <table class="table table-bordered table-striped table-hover">
                         <thead class="table-dark" align="center">
