@@ -34,3 +34,6 @@ Route::get('get-product/{id}', [TransactionController::class, 'getProduct']);
 Route::resource('users', UserController::class);
 route::get('logout', [LoginController::class, 'logout']);
 
+route::get('get-product/{id}', [TransactionController::class, 'getProduct']);
+Route::get('print/{id}', [TransactionController::class, 'print'])->name('print');
+

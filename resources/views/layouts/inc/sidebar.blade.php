@@ -122,7 +122,7 @@
         </a>
         <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ route('pos.create') }}">
+            <a href="{{ route('pos.index') }}">
               <i class="bi bi-circle"></i><span>POS</span>
             </a>
           </li>

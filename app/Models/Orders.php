@@ -13,4 +13,7 @@ class Orders extends Model
         'order_change',
         'order_status'
     ];
+  public function orderDetails(){
+    return $this->hasMany(OrderDetails::class, 'order_id', 'id');
+  }
 }

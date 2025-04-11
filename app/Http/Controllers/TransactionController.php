@@ -71,7 +71,10 @@ class TransactionController extends Controller
 
     public function show(string $id)
     {
-        return view('show.pod');
+        $order = Orders::findOrFail($id);
+        $orderDetails = orderDetails::with('product')->where('order_id', $id)->get();
+        $title = "Order Details Of " . $order->order_code;
+        return view('pos.show', compact('order', 'orderDetails', 'title'));
     }
 
    public function edit($id)
@@ -124,5 +127,14 @@ class TransactionController extends Controller
         $response = ['status' => 'success', 'message' => 'Fetch Product Success', 'data' => $products];
         return response()->json($response, 200);
     }
+
+    public function print($id)
+    {
+    $order = Orders::findOrFail($id);
+    $orderDetails = OrderDetails::with('product')->where('order_id', $id)->get();
+    return view('pos.print-srtuk', compact('order', 'orderDetails'));
+    }
+
+
 
 }
