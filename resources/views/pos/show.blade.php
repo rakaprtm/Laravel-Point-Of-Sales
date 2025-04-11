@@ -1,9 +1,17 @@
-@extends('layouts.main') @section('title', 'Point Of Sale')
+@extends('layouts.main') @section('title', 'Order Detail')
 @section('content')
 <section>
-    <form action="{{ route('pos.store') }}" method="post" enctype="multipart/form-data">
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-12">
+            <div class="card-header">
+                <h3>{{ $title ?? ''}}</h3>
+            </div>
+            <div>
+                <a href="{{ url()->previous() }}" class="btn btn-primmary">Back</a>
+                <a href="#" class="btn btn-success">
+                    <i class="bi bi-printer"></i>
+                </a>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <h5 align="center" class="card-title">Select Order</h5>
@@ -76,6 +84,6 @@
                     </div>
                 </div>
             </div>
-        </form>
+
 </section>
 @endsection

@@ -18,17 +18,17 @@
 
                         <div class="mt-4 mb-3">
                             <div align="left" class="mb-3">
-                                <a class="btn btn-primary" href="{{ route('pos.create') }}">Add Pos</a>
+                                <a class="btn btn-primary btn-sm" href="{{ route('pos.create') }}">ADD POS +</a>
                             </div>
                             <table class="table table-bordered table-striped table-hover">
                                 <thead align="center" class="table-dark">
                                     <tr>
                                         <th>No</th>
-                                        <th>Order code</th>
+                                        <th class="bg-danger">Order code</th>
                                         <th>Order Date</th>
-                                        <th>Amount</th>
+                                        <th class="bg-danger">Amount</th>
                                         <th>Status</th>
-                                        <th></th>
+                                        <th class="bg-secondary"></th>
                                     </tr>
                                 </thead>
                                 <tbody align="center">
@@ -41,11 +41,11 @@
                                         <td>{{ $data->order_amount }}</td>
                                         <td>{{ $data->order_status ? 'Paid' : 'Unpaid' }}</td>
                                         <td>
-                                            <a href="{{ route('pos.show', $data->id) }}" class="btn btn-sm btn-secondary">
-                                                <i class="bi bi-detail"></i>
+                                            <a href="{{ route('pos.show', $data->id) }}" class="btn btn-sm btn-warning">
+                                                <i class="bi bi-eye"></i>
                                             </a>
                                             <a href="{{ route('pos.edit', $data->id) }}" class="btn btn-sm btn-success">
-                                                <i class="bi bi-print"></i>
+                                                <i class="bi bi-printer"></i>
                                             </a>
                                         </td>
                                     </tr>

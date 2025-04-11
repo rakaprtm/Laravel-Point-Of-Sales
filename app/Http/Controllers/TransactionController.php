@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categories;
 use App\Models\Products;
 use App\Models\Orders;
+use App\Models\OrderDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -34,24 +35,43 @@ class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+   public function store(Request $request)
+{
+    // Generate kode order otomatis
+    $qOrderCode = Orders::max('id');
+    $qOrderCode++;
+    $orderCode = "ORD" . date("dmy") . sprintf("%03d", $qOrderCode);
+
+    // Simpan data order
+    $orderData = [
+        'order_code' => $orderCode,
+        'order_date' => date("Y-m-d"),
+        'order_amount' => $request->grandtotal,
+        'order_change' => 1,
+        'order_status' => 1,
+    ];
+
+    $order = Orders::create($orderData);
+
+    // Simpan detail order (beberapa produk sekaligus)
+    foreach ($request->qty as $key => $value) {
+        OrderDetails::create([
+            'order_id' => $order->id,
+            'product_id' => $request->product_id[$key],
+            'qty' => $request->qty[$key],
+            'order_price' => $request->order_price[$key],
+            'order_subtotal' => $request->order_subtotal[$key],
+        ]);
+    }
+
+    // Redirect kembali ke halaman order dengan pesan sukses
+    return redirect()->route('pos.index')->with('success', 'Transaction saved successfully');
+
+}
+
+    public function show(string $id)
     {
-        $data = [
-            'category_id' => $request->category_id,
-            'product_name' => $request->product_name,
-            'product_price' => $request->product_price,
-            'product_description' => $request->product_description,
-            'is_active' => $request->is_active,
-        ];
-        if($request->hasFile('product_photo')) {
-            $photo = $request->file('product_photo')->store('products', 'public');
-            $data['product_photo'] = $photo;
-        }
-
-        Products::create($data);
-
-        return redirect()->route('products.index')->with('success', 'Product added successfully');
-
+        return view('show.pod');
     }
 
    public function edit($id)

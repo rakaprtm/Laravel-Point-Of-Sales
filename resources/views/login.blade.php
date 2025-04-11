@@ -53,7 +53,7 @@
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                   <img src="tugas1/assets/assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">Point Of Seles</span>
+                  <span class="d-none d-lg-block">Welcome To Point Of Sale</span>
                 </a>
               </div><!-- End Logo -->
 
@@ -62,7 +62,7 @@
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+                    <h5 class="card-title text-center pb-0 fs-4">Login To Your Account</h5>
                     <p class="text-center small">Enter your email & password to login</p>
                   </div>
 
@@ -104,7 +104,7 @@
                 <!-- You can delete the links only if you purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                Designed by <a href="https://bootstrapmade.com/">Rakapratama</a>
               </div>
 
             </div>

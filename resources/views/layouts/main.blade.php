@@ -134,54 +134,97 @@
         "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
 
       <script>
+    function formatRupiah(number) {
+        const formatted = number.toLocaleString("id", {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        });
+        return formatted;
+    }
+
     $("#category_id").change(function () {
-        let cat_id = $(this).val();
-        let option = `<option value="">Choose Product</option>`;
+        let cat_id = $(this).val()
+        let option = `<option value="">Select One</option>`;
+
         $.ajax({
             url: "/get-product/" + cat_id,
             type: "GET",
             dataType: "json",
             success: function (resp) {
-                $("#product_id").empty();
                 $.each(resp.data, function(index, value) {
-                    option += `<option value="${value.id}" data-name="${value.product_name}" data-price="${value.product_price}"
-                    data-photo="${value.product_photo}">${value.product_name}</option>`;
+                    option += `<option value="${value.id}" data-price="${value.product_price}" data-img="${value.product_photo}">${value.product_name}</option>`;
                 });
-                $("#product_id").html(option);
+                $('#product_id').html(option);
             }
         });
     });
 
-    $(".add-row").click(function () {
-    let tbody = $("table tbody");
+    $(".add-row").click(function() {
+        let tbody = $('tbody');
+        let selectedOption = $('#product_id').find('option:selected');
+        let namaProduk = selectedOption.text();
+        let productId = selectedOption.val();
+        let photoProduct = selectedOption.data('img');
+        let productPrice = parseInt(selectedOption.data('price')) || 0;
 
-    if ($("#category_id").val() === "") {
-        alert("Please select category");
-        return false;
-    }
+        if($('#category_id').val() == "") {
+            alert("Category required");
+            return false;
+        }
 
-    if ($("#product_id").val() === "") {
-        alert("Please select product");
-        return false;
-    }
+        if($('#product_id').val() == "") {
+            alert("Product required");
+            return false;
+        }
 
-    let selectedOption = $("#product_id option:selected");
-    let productName = selectedOption.data("name");
-    let productPrice = selectedOption.data("price");
-    let productImage = selectedOption.data("photo");
+        let baseStorageUrl = "{{ asset('storage') }}";
 
+        let newRow = "<tr>";
+        newRow += `<td><img width="75px" height="75px" src="${baseStorageUrl}/${photoProduct}" alt="Product Image"></td>`;
+        newRow += `<td>${namaProduk} <input type="hidden" name="product_id[]" value="${productId}"></td>`;
+        newRow += `<td width='110px'><input value='1' type='number' name='qty[]' class='qty form-control'></td>`;
+        newRow += `<td><input type="hidden" name="order_price[]" value="${productPrice}"><span class='price' data-price="${productPrice}">Rp. ${formatRupiah(productPrice)}</span></td>`;
+        newRow += `<td><input type="hidden" class="subtotal_input" name="order_subtotal[]" value="${productPrice}"><span class="subtotal">${formatRupiah(productPrice)}</span></td>`;
+        newRow += `<td><button type="button" class="btn btn-sm btn-danger remove-row"><i class="bi bi-trash"></i></button></td>`;
+        newRow += "</tr>";
 
+        tbody.append(newRow);
+        calculateSubTotal();
+        clearAll();
 
-   let newRow = "<tr>";
-    newRow += `<td><img src="/storage/${productImage}" width="60" height="60" alt="${productName}" /></td>`;
-    newRow += `<td>${productName}</td>`;
-    newRow += `<td><input type="number" class="form-control" name="qty[]" value="1" min="1" /></td>`;
-    newRow += `<td><input type="number" class="form-control" name="price[]" value="${productPrice}" readonly /></td>`;
-    newRow += "</tr>";
+        $('.qty').off().on('input', function () {
+            let row = $(this).closest('tr');
+            let qty = parseInt($(this).val()) || 0;
+            let price = parseInt(row.find('.price').data('price')) || 0;
+            let total = qty * price;
+            row.find('.subtotal').text(formatRupiah(total));
+            row.find('.subtotal_input').val(total);
+            calculateSubTotal();
+        });
+    });
 
-    tbody.prepend(newRow);
-});
-</script>
+            $(document).on('click', '.remove-row', function () {
+                $(this).closest('tr').remove();
+                calculateSubTotal();
+            });
+
+            function clearAll() {
+                $('#category_id').val('');
+                $('#product_id').val('');
+            }
+
+            function calculateSubTotal() {
+                let grandtotal = 0;
+                $('.subtotal').each(function () {
+                    let total = parseInt($(this).text().replace(/\./g, '').replace('Rp', '').trim()) || 0;
+                    grandtotal += total;
+                });
+
+                $('.grandtotal').text('Rp. ' + formatRupiah(grandtotal));
+                $('input[name="grandtotal"]').val(grandtotal);
+            }
+        </script>
+
     </body>
 </html>
 
