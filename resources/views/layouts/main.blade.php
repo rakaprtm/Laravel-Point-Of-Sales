@@ -99,7 +99,7 @@
         <a
             href="#"
             class="back-to-top d-flex align-items-center justify-content-center"
-            ><i class="bi bi-arrow-up-short"></i
+            ><i class="bi bi-arrow-up-short">/i
         ></a>
 
         <!-- Vendor JS Files -->
@@ -224,6 +224,8 @@
                 $('input[name="grandtotal"]').val(grandtotal);
             }
         </script>
+    
+
 
     </body>
 </html>

@@ -30,7 +30,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
         ]);
-        
+
         User::create([
             'name' => $request->name,
             'email' => $request->email,

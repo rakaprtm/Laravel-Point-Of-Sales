@@ -6,19 +6,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-size: 14px;
+            font-size: 17px;
             width: 300px;
             margin: auto;
-        }
-        .logo {
-            font-size: 30px;
-        }
-        .highlight-box {
-            border: 1px solid #198754;
-            background-color: #d1e7dd;
-            padding: 8px;
-            text-align: center;
-            font-size: 12px;
         }
         .table-borderless td {
             padding: 0.2rem;
@@ -27,16 +17,18 @@
 </head>
 <body onload="window.print()">
     <div class="text-center mb-2">
-        <div class="logo"></div>
-        <h6 class="fw-bold mb-0">TOKO WIDODO</h6>
-        <small>Jl. Dr. Ir. H. Taubat No.420, Kota Tutup, Kajarta</small><br>
-        <small>No. Telp: 0895347570504</small><br>
-        <small>{{ now()->format('YmdHis') }}</small>
+        <div align="center" class="sb">
+            <img src="{{ asset('img/logosb.png') }}" alt="logo" style="width: 120px; height: auto;">
+        </div>
+        <h6 class="fw-bold mb-3 fs-1"><i>STARBOY</i></h6>
+        <small class="fw-bold">JL. DR.TAUBAT N0. 420, BARCELONA</small><br>
+        <small class="fw-bold">NO. TELP: 0895347570504</small><br>
+        <small class="fw-bold">{{ now()->format('YmdHis') }}</small>
     </div>
 
-    <hr class="my-2">
+    <hr class="my-2 fw-bold">
 
-    <table class="table table-borderless">
+    <table class="table table-borderless fw-bold">
         <tr>
             <td>Tanggal</td>
             <td class="text-end">{{ date('Y-m-d') }}</td>
@@ -51,7 +43,7 @@
         </tr>
     </table>
 
-    <table class="table table-sm">
+    <table class="table table-sm fw-bold">
         <tbody>
             @foreach ($orderDetails as $key => $item)
             <tr>
@@ -60,8 +52,8 @@
             </tr>
             <tr>
                 <td></td>
-                <td class="text-muted">x{{ $item->qty }}</td>
-                <td class="text-end text-muted">Rp {{ number_format($item->order_subtotal, 0, ',', '.') }}</td>
+                <td class="text-end">x{{ $item->qty }}</td>
+                <td class="text-end">Rp {{ number_format($item->order_subtotal, 0, ',', '.') }}</td>
             </tr>
             @endforeach
         </tbody>
@@ -69,23 +61,23 @@
 
     <hr class="my-2">
 
-    <table class="table table-borderless">
+    <table class="table table-borderless fw-bold">
         <tr>
-            <td><strong>Total Qty</strong></td>
+            <td><strong>Qty</strong></td>
             <td class="text-end">{{ $orderDetails->sum('qty') }}</td>
         </tr>
         <tr>
             <td><strong>Total</strong></td>
             <td class="text-end">Rp {{ number_format($order->order_amount, 0, ',', '.') }}</td>
         </tr>
-        <tr>
+        <!-- <tr>
             <td>Bayar</td>
             <td class="text-end">Rp {{ number_format($order->order_amount, 0, ',', '.') }}</td>
-        </tr>
+        </tr> -->
     </table>
 
     <div class="text-center">
-        <p class="mb-1">Terima kasih Anda Kena Penipuan</p>
+        <p class="mt-4">TERIMA KASIH ANDA TELAH MENJADI STARBOY</p>
     </div>
 
 </body>

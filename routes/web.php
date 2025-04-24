@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\KasirController;
 
 Route::get('/', function () {
     return view('login');
@@ -27,6 +28,8 @@ Route::resource('dashboard', DashboardController::class);
 Route::resource('categories', CategoriesController::class);
 Route::resource('products', ProductController::class);
 route::resource('pos', TransactionController::class);
+Route::post('/transaction/{id}/payment', [TransactionController::class, 'updatePayment'])->name('pos.updatePayment');
+
 
 Route::get('get-product/{id}', [TransactionController::class, 'getProduct']);
 
@@ -37,3 +40,7 @@ route::get('logout', [LoginController::class, 'logout']);
 route::get('get-product/{id}', [TransactionController::class, 'getProduct']);
 Route::get('print/{id}', [TransactionController::class, 'print'])->name('print');
 
+
+
+Route::get('/kasir', [KasirController::class, 'index'])->name('kasir.index');
+route::post('/kasir',[KasirController::class, 'store'])->name('kasir.store');

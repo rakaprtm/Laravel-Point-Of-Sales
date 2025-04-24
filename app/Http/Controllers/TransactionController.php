@@ -35,39 +35,85 @@ class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-   public function store(Request $request)
-{
-    // Generate kode order otomatis
-    $qOrderCode = Orders::max('id');
-    $qOrderCode++;
-    $orderCode = "ORD" . date("dmy") . sprintf("%03d", $qOrderCode);
+//    public function store(Request $request)
+// {
+//     // Generate kode order otomatis
+//     $qOrderCode = Orders::max('id');
+//     $qOrderCode++;
+//     $orderCode = "ORD" . date("dmy") . sprintf("%03d", $qOrderCode);
 
-    // Simpan data order
-    $orderData = [
-        'order_code' => $orderCode,
-        'order_date' => date("Y-m-d"),
-        'order_amount' => $request->grandtotal,
-        'order_change' => 1,
-        'order_status' => 1,
-    ];
+//     // Simpan data order
+//     $orderData = [
+//         'order_code' => $orderCode,
+//         'order_date' => date("Y-m-d"),
+//         'order_amount' => $request->grandtotal,
+//         'order_change' => 1,
+//         'order_status' => 1,
+//     ];
 
-    $order = Orders::create($orderData);
+//     $order = Orders::create($orderData);
 
-    // Simpan detail order (beberapa produk sekaligus)
-    foreach ($request->qty as $key => $value) {
-        OrderDetails::create([
-            'order_id' => $order->id,
-            'product_id' => $request->product_id[$key],
-            'qty' => $request->qty[$key],
-            'order_price' => $request->order_price[$key],
-            'order_subtotal' => $request->order_subtotal[$key],
+//     // Simpan detail order (beberapa produk sekaligus)
+//     foreach ($request->qty as $key => $value) {
+//         OrderDetails::create([
+//             'order_id' => $order->id,
+//             'product_id' => $request->product_id[$key],
+//             'qty' => $request->qty[$key],
+//             'order_price' => $request->order_price[$key],
+//             'order_subtotal' => $request->order_subtotal[$key],
+//         ]);
+//     }
+
+//     // Redirect kembali ke halaman order dengan pesan sukses
+//     return redirect()->route('pos.index')->with('success', 'Transaction saved successfully');
+
+// }
+ public function store(Request $request)
+    {
+        // return $request->all();
+        $request->validate([
+            'cart' => 'required',
+            'cash' => 'required|numeric|min:0',
+            'total' => 'required|numeric|min:0',
+            'change' => 'required|numeric|min:0',
         ]);
+
+        $data = json_decode($request->cart, true);
+
+
+        $latestIdOrder = Orders::max('id') + 1;
+        $order = Orders::create([
+            'order_code' => $this->generateOrderCode($latestIdOrder),
+            'order_date' => now(),
+            'order_amount' => $request->total,
+            'order_change' =>  $request->change,
+            'order_status' =>  1,
+            'customer_name' => "John Doe",
+        ]);
+
+        foreach ($data as $item) {
+            OrderDetails::create([
+                'order_id' => $order->id,
+                'product_id' => $item['productId'],
+                'qty' => $item['qty'],
+                'order_price' => $item['price'],
+                'order_subtotal' => $item['qty'] * $item['price'],
+            ]);
+        }
+        // return $request;
+
+        Alert::success('Success', 'Transaction successfully');
+        return redirect('/pos-sale');
     }
 
-    // Redirect kembali ke halaman order dengan pesan sukses
-    return redirect()->route('pos.index')->with('success', 'Transaction saved successfully');
+    private function generateOrderCode($orderId)
+    {
+        $prefix = 'POS';
+        $date = now()->format('Ymd');
 
-}
+        return "{$prefix}-{$date}-" . str_pad($orderId, 6, '0', STR_PAD_LEFT);
+    }
+
 
     public function show(string $id)
     {

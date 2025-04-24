@@ -38,7 +38,7 @@
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $data->order_code}}</td>
                                         <td>{{ $data->order_date }}</td>
-                                        <td>{{ $data->order_amount }}</td>
+                                        <td align="left">{{ 'Rp ' . number_format($data->order_amount, 0, ',', '.') }}</td>
                                         <td>{{ $data->order_status ? 'Paid' : 'Unpaid' }}</td>
                                         <td>
                                             <a href="{{ route('pos.show', $data->id) }}" class="btn btn-sm btn-warning">

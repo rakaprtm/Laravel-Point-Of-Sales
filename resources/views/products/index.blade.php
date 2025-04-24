@@ -40,7 +40,7 @@
                                         <td><img src="{{ asset('storage/'. $data->product_photo) }}" alt="" width="50"></td>
                                         <td>{{ $data->category->category_name}}</td>
                                         <td>{{ $data->product_name }}</td>
-                                        <td>{{ $data->product_price }}</td>
+                                        <td>Rp. {{ number_format($data->product_price, 0, ',', '.') }}</td>
                                         <td>{{ $data->is_active ? 'publish' : 'Draft' }}</td>
                                         <td>
                                             <a href="{{ route('products.edit', $data->id) }}" class="btn btn-sm btn-secondary">

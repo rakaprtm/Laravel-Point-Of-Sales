@@ -48,7 +48,7 @@
                                     <th class="bg-secondary">Qty</th>
                                     <th>Price</th>
                                     <th class="bg-secondary">Sub Total</th>
-                                    <th></th>
+
                                 </tr>
                             </thead>
                             <tbody align="center">
@@ -68,9 +68,9 @@
                             <tfoot>
                                 <tr align="center">
                                     <td  class="bg-success text-white" colspan="2">Total</td>
-                                    <td colspan="3" class="text-end pe-4">
-                                        <span class="grandtotal"></span>
-                                        <input type="hidden" class="form-control" name="grandtotal" readonly>
+                                    <td colspan="4" class="text-end pe-4">
+                                        <span class="grandtotal">{{ 'Rp ' . number_format($order->order_amount, 0, ',', '.') }}</span>
+                                        <input type="hidden" class="form-control" name="grandtotal" value="{{ $order->order_amount }}" readonly>
                                     </td>
                                 </tr>
                             </tfoot>

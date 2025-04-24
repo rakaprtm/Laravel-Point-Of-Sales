@@ -57,9 +57,11 @@
                                 type="text"
                                 class="form-control"
                                 name="product_price"
-                                placeholder="Enter Product Price"
+                                id="product_price"
+                                placeholder="Rp. 0"
                                 required
                             />
+
                         </div>
 
                         <div class="mb-3">
@@ -108,3 +110,23 @@
     </div>
 </section>
 @endsection
+<script>
+    const priceInput = document.getElementById('product_price');
+
+    priceInput.addEventListener('input', function (e) {
+        let value = e.target.value.replace(/[^,\d]/g, '').toString();
+        let split = value.split(',');
+        let sisa = split[0].length % 3;
+        let rupiah = split[0].substr(0, sisa);
+        let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+            let separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+        e.target.value = 'Rp. ' + rupiah;
+    });
+</script>
+
