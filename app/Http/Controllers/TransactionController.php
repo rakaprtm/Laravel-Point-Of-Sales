@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categories;
 use App\Models\Products;
+use Carbon\Carbon;
 use App\Models\Orders;
 use App\Models\OrderDetails;
 use Illuminate\Http\Request;
@@ -16,12 +17,34 @@ class TransactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $title = "Orders";
-        $datas = Orders::orderBy('id', 'desc')->get();
-        return view('pos.index', compact('title', 'datas'));
+    public function index(Request $request)
+{
+    $title = "Orders";
+    $datas = Orders::query();
+
+    if ($request->has('filter') && $request->filter !== null) {
+        $date = $request->date ? Carbon::parse($request->date) : Carbon::today();
+
+        switch ($request->filter) {
+            case 'daily':
+                $datas->whereDate('order_date', $date);
+                break;
+            case 'weekly':
+                $startOfWeek = $date->copy()->startOfWeek();
+                $endOfWeek = $date->copy()->endOfWeek();
+                $datas->whereBetween('order_date', [$startOfWeek, $endOfWeek]);
+                break;
+            case 'monthly':
+                $datas->whereMonth('order_date', $date->month)
+                      ->whereYear('order_date', $date->year);
+                break;
+        }
     }
+
+    $datas = $datas->orderBy('id', 'desc')->get();
+
+    return view('pos.index', compact('title', 'datas'));
+}
 
     /**
      * Show the form for creating a new resource.

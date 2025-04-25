@@ -17,9 +17,24 @@
                         @endif
 
                         <div class="mt-4 mb-3">
-                            <div align="left" class="mb-3">
-                                <a class="btn btn-primary btn-sm" href="{{ route('pos.create') }}">ADD POS +</a>
-                            </div>
+                            <form method="GET" action="{{ route('pos.index') }}" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <select name="filter" class="form-select">
+            <option value="">-- Filter By --</option>
+            <option value="daily" {{ request('filter') == 'daily' ? 'selected' : '' }}>Harian</option>
+            <option value="weekly" {{ request('filter') == 'weekly' ? 'selected' : '' }}>Mingguan</option>
+            <option value="monthly" {{ request('filter') == 'monthly' ? 'selected' : '' }}>Bulanan</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <input type="date" name="date" value="{{ request('date') }}" class="form-control">
+    </div>
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-primary">Tampilkan</button>
+        <a href="{{ route('pos.index') }}" class="btn btn-secondary">Reset</a>
+    </div>
+</form>
+
                             <table class="table table-bordered table-striped table-hover">
                                 <thead align="center" class="table-dark">
                                     <tr>

@@ -59,7 +59,7 @@ class KasirController extends Controller
         // return $request;
 
         Alert::success('Success', 'Transaction successfully');
-        return redirect('/pos-sale');
+        return redirect('/kasir');
     }
 
     private function generateOrderCode($orderId)

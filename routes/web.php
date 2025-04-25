@@ -9,22 +9,26 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\KasirController;
+use App\Http\Controllers\AuthController;
 
-Route::get('/', function () {
-    return view('login');
-});
+// Route::get('/', function () {
+//     return view('login');
+// });
 
 Route::get('belajar', [BelajarController::class, 'index']);
 Route::get('tambah', [BelajarController::class, 'tambah']);
 Route::get('kurang', [BelajarController::class, 'kurang']);
 
-Route::get('login', [LoginController::class, 'login'])->name('login');
-Route::post('action-login', [LoginController::class, 'actionLogin']);
+// Route::get('login', [LoginController::class, 'login'])->name('login');
+// Route::post('action-login', [LoginController::class, 'actionLogin']);
+
 
 Route::post('actionTambah', [BelajarController::class, 'actionTambah']);
 Route::post('actionKurang', [BelajarController::class, 'actionKurang']);
 
-Route::resource('dashboard', DashboardController::class);
+Route::resource('dashboard', DashboardController::class)->middleware(['auth'])->names('dashboard');
+
+
 Route::resource('categories', CategoriesController::class);
 Route::resource('products', ProductController::class);
 route::resource('pos', TransactionController::class);
@@ -35,12 +39,20 @@ Route::get('get-product/{id}', [TransactionController::class, 'getProduct']);
 
 
 Route::resource('users', UserController::class);
-route::get('logout', [LoginController::class, 'logout']);
+// route::get('logout', [LoginController::class, 'logout']);
 
 route::get('get-product/{id}', [TransactionController::class, 'getProduct']);
 Route::get('print/{id}', [TransactionController::class, 'print'])->name('print');
+// Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('action-login', [AuthController::class, 'actionLogin']);
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
-Route::get('/kasir', [KasirController::class, 'index'])->name('kasir.index');
-route::post('/kasir',[KasirController::class, 'store'])->name('kasir.store');
+Route::middleware(['auth','role:Kasir'])->get('/kasir', [KasirController::class, 'index'])->name('kasir.index');
+
+Route::middleware(['auth', 'role:Kasir'])->post('/kasir', [KasirController::class, 'store'])->name('kasir.store');
+Route::middleware(['auth', 'role:Administrator,Pimpinan'])->get('/stock', [ProductController::class, 'stockproducts']);
+
+

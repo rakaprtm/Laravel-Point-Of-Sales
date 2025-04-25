@@ -83,6 +83,17 @@
                       <input type="password" name="password" class="form-control" id="yourPassword" required>
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
+                    <div class="col-12">
+                      <label for="yourRole" class="form-label">Role
+                        <span class="text-danger small">*</span>
+                      </label>
+                      <select name="role" class="form-select" id="yourRole" required>
+                        <option value="" disabled selected>Select Role</option>
+                        @foreach ($roles as $role)
+                          <option value="{{ $role->id }}">{{ $role->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
 
                     <div class="col-12">
                       <div class="form-check">

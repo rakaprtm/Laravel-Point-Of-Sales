@@ -16,6 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
+        // return session('selected_role');
         $title = "Data Products";
         $datas = Products::with('category')->get();
         return view('products.index', compact('title', 'datas'));
@@ -96,6 +97,12 @@ return redirect()->route('kasir.index')->with('success', 'Product added successf
         File::delete(public_path('storage/' . $product->product_photo));
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Product deleted successfully');
+    }
+
+    public function stockproducts()
+    {
+        $products = Products::get();
+        return view('stock.index', compact('products'));
     }
 
 }
