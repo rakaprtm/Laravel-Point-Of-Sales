@@ -55,6 +55,6 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth','role:Kasir'])->get('/kasir', [KasirController::class, 'index'])->name('kasir.index');
 
 Route::middleware(['auth', 'role:Kasir'])->post('/kasir', [KasirController::class, 'store'])->name('kasir.store');
-Route::middleware(['auth', 'role:Administrator,Kasir'])->get('/stock', [ProductController::class, 'stockproducts']);
+Route::middleware(['auth', 'role:Administrator,Pimpinan,Kasir'])->get('/stock', [ProductController::class, 'stockproducts']);
 
 

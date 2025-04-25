@@ -14,54 +14,49 @@ class RoleController extends Controller
         $title = "Data Roles";
         $datas = Role::all();
 
-        return view('Role.index', compact('title', 'datas'));
+        return view('role.index', compact('title', 'datas'));
     }
 
 
     public function create()
     {
-        return view('Role.create');
+        return view('roles.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:Roles,email',
-            'password' => 'required|min:6',
+            'name' => 'required',
         ]);
 
         Role::create([
             'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('Roles.index')->with('success', 'Role added successfully');
+        return redirect()->route('roles.index')->with('success', 'Role added successfully');
     }
 
     public function edit($id)
     {
         $Role = Role::findOrFail($id);
-        return view('Role.edit', compact('Role'));
+        return view('roles.edit', compact('Role'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $Role = Role::findOrFail($id);
 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:Roles,email,' . $id,
+            'name' => 'required',
+
         ]);
 
         $Role->update([
             'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password ?? $Role->password,
+
         ]);
 
-        return redirect()->route('Roles.index')->with('success', 'Role updated successfully');
+        return redirect()->route('roles.index')->with('success', 'Role updated successfully');
     }
 
     public function destroy($id)
@@ -69,6 +64,6 @@ class RoleController extends Controller
         $Role = Role::findOrFail($id);
         $Role->delete();
 
-        return redirect()->route('Roles.index')->with('success', 'Role deleted successfully');
+        return redirect()->route('roles.index')->with('success', 'Role deleted successfully');
     }
 }

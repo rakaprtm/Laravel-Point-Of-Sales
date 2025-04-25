@@ -60,7 +60,7 @@
       <!-- </ul>
     </li> -->
     @endif
-@if (in_array($role, ['Kasir', 'Administrator']))
+@if (in_array($role, ['Kasir', 'Administrator', 'Pimpinan']))
 <li>
           <a href="/stock" class="nav-link {{ Request::is('stock') ? '' : 'collapsed' }}">
             <i class="bi bi-circle"></i><span>Stock</span>
@@ -74,7 +74,7 @@
         <i class="bi bi-journal-text"></i><span>POS Manage</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="forms-nav" class="nav-content collapse {{ Request::is('pos', 'kasir') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
-        
+
         <li>
           <a href="/kasir" class="nav-link {{ Request::is('kasir') ? '' : 'collapsed' }}">
             <i class="bi bi-circle"></i><span>PO</span>

@@ -48,12 +48,12 @@
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+            <div class="col-lg-5 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
-              <div class="d-flex justify-content-center py-4">
+              <div class="d-flex justify-content-center py-3">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                   <img src="tugas1/assets/assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">Welcome To Point Of Sale</span>
+                  <span class="d-none d-lg-block">REST🍔RASI</span>
                 </a>
               </div><!-- End Logo -->
 
