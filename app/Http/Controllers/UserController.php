@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
+use App\Models\UserRole;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -12,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         $title = "Data Users";
-        $datas = User::all();
+        $datas = User::get();
 
         return view('user.index', compact('title', 'datas'));
     }
@@ -20,7 +22,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('user.create');
+        $roles = Role::all();
+        return view('user.create', compact('roles')) ;
     }
 
     public function store(Request $request)
@@ -31,10 +34,17 @@ class UserController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+
+        ]);
+
+        UserRole::create([
+            'user_id' => $user->id,
+            'role_id' => $request->role_id,
+
         ]);
 
         return redirect()->route('users.index')->with('success', 'User added successfully');

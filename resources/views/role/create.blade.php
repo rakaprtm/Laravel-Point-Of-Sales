@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <h5 class="card-title text-center">Add User</h5>
 
-                        <form action="{{ route('users.store') }}" method="POST">
+                        <form action="{{ route('roles.store') }}" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
@@ -22,32 +22,13 @@
                                 <input type="email" name="email" class="form-control" required>
                             </div>
 
-
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" name="password" class="form-control" required>
                             </div>
-                            <div class="mb-3">
-                            <label for="" class="col-form-label"
-                                >Role</label
-                            >
-                            <select
-                                name="role_id"
-                                id=""
-                                class="form-control"
-                            >
-                                <option value="">Select One</option>
-                                @foreach($roles as $role)
-                                <option value="{{ $role->id }}">
-                                    {{ $role->name }}
-
-                                </option>
-                                @endforeach
-                            </select>
-                        </div>
                         <div align="center">
                             <button type="submit" class="btn btn-primary">Save</button>
-                            <a href="{{ route('users.index') }}" class="btn btn-danger">Cancel</a>
+                            <a href="{{ route('roles.index') }}" class="btn btn-danger">Cancel</a>
                             <a href="{{ url()->previous() }}" class="btn btn-warning">Back</a>
                         </div>
                         </form>

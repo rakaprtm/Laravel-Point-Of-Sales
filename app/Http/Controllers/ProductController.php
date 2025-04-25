@@ -42,6 +42,7 @@ class ProductController extends Controller
             'product_price' => $request->product_price,
             'product_description' => $request->product_description,
             'is_active' => $request->is_active,
+            'product_qty' => $request->product_qty
         ];
         if($request->hasFile('product_photo')) {
             $photo = $request->file('product_photo')->store('products', 'public');
@@ -51,7 +52,7 @@ class ProductController extends Controller
         Products::create($data);
 
         // return redirect()->route('products.index')->with('success', 'Product added successfully');
-return redirect()->route('kasir.index')->with('success', 'Product added successfully');
+return redirect()->route('products.index')->with('success', 'Product added successfully');
 
     }
 
@@ -71,6 +72,7 @@ return redirect()->route('kasir.index')->with('success', 'Product added successf
     $product->product_price = $request->product_price;
     $product->product_description = $request->product_description;
     $product->is_active = $request->is_active;
+    $product->product_qty = $request->product_qty;
 
 
     if ($request->hasFile('product_photo')) {

@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RoleController;
 
 // Route::get('/', function () {
 //     return view('login');
@@ -39,6 +40,7 @@ Route::get('get-product/{id}', [TransactionController::class, 'getProduct']);
 
 
 Route::resource('users', UserController::class);
+Route::resource('roles', RoleController::class);
 // route::get('logout', [LoginController::class, 'logout']);
 
 route::get('get-product/{id}', [TransactionController::class, 'getProduct']);
@@ -53,6 +55,6 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth','role:Kasir'])->get('/kasir', [KasirController::class, 'index'])->name('kasir.index');
 
 Route::middleware(['auth', 'role:Kasir'])->post('/kasir', [KasirController::class, 'store'])->name('kasir.store');
-Route::middleware(['auth', 'role:Administrator,Pimpinan'])->get('/stock', [ProductController::class, 'stockproducts']);
+Route::middleware(['auth', 'role:Administrator,Kasir'])->get('/stock', [ProductController::class, 'stockproducts']);
 
 

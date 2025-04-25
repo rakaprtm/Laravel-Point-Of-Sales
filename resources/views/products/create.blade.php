@@ -63,6 +63,20 @@
                             />
 
                         </div>
+                        <div class="mb-3">
+                            <label for="" class="col-form-label"
+                                >Product Qty</label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="product_qty"
+                                id="product_qty"
+                                placeholder="0"
+                                required
+                            />
+
+                        </div>
 
                         <div class="mb-3">
                             <label for="" class="col-form-label"
