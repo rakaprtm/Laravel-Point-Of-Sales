@@ -1,7 +1,40 @@
 @extends('layouts.main')
-@section('title', 'Orders')
+@section('title', 'ORDERS')
 
 @section('content')
+<style>
+    /* Mengatur tampilan print */
+@media print {
+    /* Menyembunyikan tombol print saat mencetak */
+    #print-btn {
+        display: none;
+        .table th, .table td {
+        border: 1px solid #000; /* Border hitam solid 1px */
+        padding: 0.5rem;
+        text-align: left;
+    }
+    .table thead th {
+        background-color: #eee !important; /* Latar belakang header abu-abu muda */
+        color: #000 !important;
+    }
+        
+    }
+
+    /* Mengatur layout laporan untuk mode print */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    /* Kamu bisa menambahkan aturan khusus di sini */
+}
+
+</style>
 <div class="container mt-4">
     <section class="section">
         <div class="row d-flex justify-content-center">
@@ -18,24 +51,27 @@
 
                         <div class="mt-4 mb-3">
                             <form method="GET" action="{{ route('pos.index') }}" class="row g-3 mb-4">
-    <div class="col-md-3">
-        <select name="filter" class="form-select">
-            <option value="">-- Filter By --</option>
-            <option value="daily" {{ request('filter') == 'daily' ? 'selected' : '' }}>Harian</option>
-            <option value="weekly" {{ request('filter') == 'weekly' ? 'selected' : '' }}>Mingguan</option>
-            <option value="monthly" {{ request('filter') == 'monthly' ? 'selected' : '' }}>Bulanan</option>
-        </select>
-    </div>
-    <div class="col-md-3">
-        <input type="date" name="date" value="{{ request('date') }}" class="form-control">
-    </div>
-    <div class="col-md-3">
-        <button type="submit" class="btn btn-primary">Tampilkan</button>
-        <a href="{{ route('pos.index') }}" class="btn btn-secondary">Reset</a>
-    </div>
-</form>
+                                <div class="col-md-3">
+                                    <select name="filter" class="form-select">
+                                        <option value="">-- Filter By --</option>
+                                        <option value="daily" {{ request('filter') == 'daily' ? 'selected' : '' }}>Harian</option>
+                                        <option value="weekly" {{ request('filter') == 'weekly' ? 'selected' : '' }}>Mingguan</option>
+                                        <option value="monthly" {{ request('filter') == 'monthly' ? 'selected' : '' }}>Bulanan</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="date" name="date" value="{{ request('date') }}" class="form-control">
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-primary">Tampilkan</button>
+                                    <a href="{{ route('pos.index') }}" class="btn btn-secondary">Reset</a>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-success" id="print-btn">Print</button>
+                                </div>
+                            </form>
 
-                            <table class="table table-bordered table-striped table-hover">
+                            <table class="table table-bordered table-striped table-hover ">
                                 <thead align="center" class="table-dark">
                                     <tr>
                                         <th>No</th>
@@ -59,7 +95,7 @@
                                             <a href="{{ route('pos.show', $data->id) }}" class="btn btn-sm btn-warning">
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <a href="{{ route('pos.edit', $data->id) }}" class="btn btn-sm btn-success">
+                                            <a href="{{ route('print', $data->id) }}" class="btn btn-sm btn-success">
                                                 <i class="bi bi-printer"></i>
                                             </a>
                                         </td>
@@ -74,4 +110,11 @@
         </div>
     </section>
 </div>
+
+<script>
+    // Fungsi untuk memfilter laporan berdasarkan tipe
+    // document.getElementById('print-btn').addEventListener('click', function() {
+    //     window.print(); // Menampilkan dialog print untuk mencetak halaman
+    // });
+</script>
 @endsection

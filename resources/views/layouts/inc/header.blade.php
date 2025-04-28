@@ -1,15 +1,22 @@
-<header id="header" class="header fixed-top d-flex align-items-center">
+<header id="header" class="header fixed-top d-flex align-items-center" style="background-color: rgb(2, 6, 70);">
+    <style>
+        header .d-flex.align-items-center .bi-list {
+        margin-left: -100px;  /* Atur sesuai kebutuhan */
+    }
+    
+    </style>
+
     <div class="d-flex align-items-center justify-content-between">
         <a href="" class="logo d-flex align-items-center text-decoration-none">
         <img src="assets/img/logo.png" alt="" />
         <span class="d-none d-lg-block text-danger">REST🍔RASI</span>
         </a>
 
-        <i class="bi bi-list toggle-sidebar-btn"></i>
+        <i style="color: white;" class="bi bi-list toggle-sidebar-btn"></i>
     </div>
     <!-- End Logo -->
 
-    <div class="search-bar">
+    <!-- <div class="search-bar">
         <form
             class="search-form d-flex align-items-center"
             method="POST"
@@ -25,7 +32,7 @@
                 <i class="bi bi-search"></i>
             </button>
         </form>
-    </div>
+    </div> -->
     <!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
@@ -48,9 +55,9 @@
                     href="#"
                     data-bs-toggle="dropdown"
                 >
-                    <img src="{{ asset('img/resto.png') }}" alt="Profile" class="rounded-circle" />
+                    <img src="{{ asset('img/man.webp') }}" alt="Profile" class="rounded-circle" />
 
-                    <span class="d-none d-md-block dropdown-toggle ps-2"
+                    <span class="d-none d-md-block dropdown-toggle ps-2" style="color: white; font-weight: bold;"
                         >@if(auth()->check())
         Hi, {{ auth()->user()->name }}</span
                     > </a

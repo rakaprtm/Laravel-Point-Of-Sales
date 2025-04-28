@@ -19,12 +19,11 @@
     }
   </style>
 </head>
-<body class="bg-light">
+<body class="">
   <div class="container-fluid p-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <div>
-        <span  class="me-2">{{ auth()->user()->name }}</span>
-        <img src="/img/logoppkd.png" class="rounded-circle" style="width: 35px; height: 35px; alt="User">
+        <span style="color: white;"  class="me-2">{{ auth()->user()->name }}</span>
       </div>
     </div>
 

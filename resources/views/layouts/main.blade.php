@@ -67,7 +67,7 @@
   ======================================================== -->
     </head>
 
-    <body>
+    <body style="background-color: rgb(182, 126, 23)">
         <!-- ======= Header ======= -->
         @include('sweetalert::alert') @include('layouts.inc.header')
 
@@ -76,8 +76,8 @@
 
         <main id="main" class="main">
             <div class="pagetitle">
-                <h1>@yield('title')</h1>
-                <nav>
+                <!-- <h1>@yield('title')</h1> -->
+                <!-- <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="index.html">Home</a>
@@ -85,7 +85,7 @@
                         <li class="breadcrumb-item">Pages</li>
                         <li class="breadcrumb-item active">Blank</li>
                     </ol>
-                </nav>
+                </nav> -->
             </div>
             <!-- End Page Title -->
 
@@ -99,7 +99,7 @@
         <a
             href="#"
             class="back-to-top d-flex align-items-center justify-content-center"
-            ><i class="bi bi-arrow-up-short">/i
+            ><i class="bi bi-arrow-up-short"></i
         ></a>
 
         <!-- Vendor JS Files -->
@@ -133,101 +133,110 @@
         @include('sweetalert::alert', ['cdn' =>
         "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
 
-      <script>
-    function formatRupiah(number) {
-        const formatted = number.toLocaleString("id", {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        });
-        return formatted;
-    }
-
-    $("#category_id").change(function () {
-        let cat_id = $(this).val()
-        let option = `<option value="">Select One</option>`;
-
-        $.ajax({
-            url: "/get-product/" + cat_id,
-            type: "GET",
-            dataType: "json",
-            success: function (resp) {
-                $.each(resp.data, function(index, value) {
-                    option += `<option value="${value.id}" data-price="${value.product_price}" data-img="${value.product_photo}">${value.product_name}</option>`;
+        <script>
+            function formatRupiah(number) {
+                const formatted = number.toLocaleString("id", {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
                 });
-                $('#product_id').html(option);
+                return formatted;
             }
-        });
-    });
 
-    $(".add-row").click(function() {
-        let tbody = $('tbody');
-        let selectedOption = $('#product_id').find('option:selected');
-        let namaProduk = selectedOption.text();
-        let productId = selectedOption.val();
-        let photoProduct = selectedOption.data('img');
-        let productPrice = parseInt(selectedOption.data('price')) || 0;
+            $("#category_id").change(function () {
+                let cat_id = $(this).val();
+                let option = `<option value="">Select One</option>`;
 
-        if($('#category_id').val() == "") {
-            alert("Category required");
-            return false;
-        }
+                $.ajax({
+                    url: "/get-product/" + cat_id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (resp) {
+                        $.each(resp.data, function (index, value) {
+                            option += `<option value="${value.id}" data-price="${value.product_price}" data-img="${value.product_photo}">${value.product_name}</option>`;
+                        });
+                        $("#product_id").html(option);
+                    },
+                });
+            });
 
-        if($('#product_id').val() == "") {
-            alert("Product required");
-            return false;
-        }
+            $(".add-row").click(function () {
+                let tbody = $("tbody");
+                let selectedOption = $("#product_id").find("option:selected");
+                let namaProduk = selectedOption.text();
+                let productId = selectedOption.val();
+                let photoProduct = selectedOption.data("img");
+                let productPrice = parseInt(selectedOption.data("price")) || 0;
 
-        let baseStorageUrl = "{{ asset('storage') }}";
+                if ($("#category_id").val() == "") {
+                    alert("Category required");
+                    return false;
+                }
 
-        let newRow = "<tr>";
-        newRow += `<td><img width="75px" height="75px" src="${baseStorageUrl}/${photoProduct}" alt="Product Image"></td>`;
-        newRow += `<td>${namaProduk} <input type="hidden" name="product_id[]" value="${productId}"></td>`;
-        newRow += `<td width='110px'><input value='1' type='number' name='qty[]' class='qty form-control'></td>`;
-        newRow += `<td><input type="hidden" name="order_price[]" value="${productPrice}"><span class='price' data-price="${productPrice}">Rp. ${formatRupiah(productPrice)}</span></td>`;
-        newRow += `<td><input type="hidden" class="subtotal_input" name="order_subtotal[]" value="${productPrice}"><span class="subtotal">${formatRupiah(productPrice)}</span></td>`;
-        newRow += `<td><button type="button" class="btn btn-sm btn-danger remove-row"><i class="bi bi-trash"></i></button></td>`;
-        newRow += "</tr>";
+                if ($("#product_id").val() == "") {
+                    alert("Product required");
+                    return false;
+                }
 
-        tbody.append(newRow);
-        calculateSubTotal();
-        clearAll();
+                let baseStorageUrl = "{{ asset('storage') }}";
 
-        $('.qty').off().on('input', function () {
-            let row = $(this).closest('tr');
-            let qty = parseInt($(this).val()) || 0;
-            let price = parseInt(row.find('.price').data('price')) || 0;
-            let total = qty * price;
-            row.find('.subtotal').text(formatRupiah(total));
-            row.find('.subtotal_input').val(total);
-            calculateSubTotal();
-        });
-    });
+                let newRow = "<tr>";
+                newRow += `<td><img width="75px" height="75px" src="${baseStorageUrl}/${photoProduct}" alt="Product Image"></td>`;
+                newRow += `<td>${namaProduk} <input type="hidden" name="product_id[]" value="${productId}"></td>`;
+                newRow += `<td width='110px'><input value='1' type='number' name='qty[]' class='qty form-control'></td>`;
+                newRow += `<td><input type="hidden" name="order_price[]" value="${productPrice}"><span class='price' data-price="${productPrice}">Rp. ${formatRupiah(
+                    productPrice
+                )}</span></td>`;
+                newRow += `<td><input type="hidden" class="subtotal_input" name="order_subtotal[]" value="${productPrice}"><span class="subtotal">${formatRupiah(
+                    productPrice
+                )}</span></td>`;
+                newRow += `<td><button type="button" class="btn btn-sm btn-danger remove-row"><i class="bi bi-trash"></i></button></td>`;
+                newRow += "</tr>";
 
-            $(document).on('click', '.remove-row', function () {
-                $(this).closest('tr').remove();
+                tbody.append(newRow);
+                calculateSubTotal();
+                clearAll();
+
+                $(".qty")
+                    .off()
+                    .on("input", function () {
+                        let row = $(this).closest("tr");
+                        let qty = parseInt($(this).val()) || 0;
+                        let price =
+                            parseInt(row.find(".price").data("price")) || 0;
+                        let total = qty * price;
+                        row.find(".subtotal").text(formatRupiah(total));
+                        row.find(".subtotal_input").val(total);
+                        calculateSubTotal();
+                    });
+            });
+
+            $(document).on("click", ".remove-row", function () {
+                $(this).closest("tr").remove();
                 calculateSubTotal();
             });
 
             function clearAll() {
-                $('#category_id').val('');
-                $('#product_id').val('');
+                $("#category_id").val("");
+                $("#product_id").val("");
             }
 
             function calculateSubTotal() {
                 let grandtotal = 0;
-                $('.subtotal').each(function () {
-                    let total = parseInt($(this).text().replace(/\./g, '').replace('Rp', '').trim()) || 0;
+                $(".subtotal").each(function () {
+                    let total =
+                        parseInt(
+                            $(this)
+                                .text()
+                                .replace(/\./g, "")
+                                .replace("Rp", "")
+                                .trim()
+                        ) || 0;
                     grandtotal += total;
                 });
 
-                $('.grandtotal').text('Rp. ' + formatRupiah(grandtotal));
+                $(".grandtotal").text("Rp. " + formatRupiah(grandtotal));
                 $('input[name="grandtotal"]').val(grandtotal);
             }
         </script>
-    
-
-
     </body>
 </html>
-
-

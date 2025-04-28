@@ -39,7 +39,7 @@ class KasirController extends Controller
 
         $latestIdOrder = Orders::max('id') + 1;
         $order = Orders::create([
-            'order_code' => $this->generateOrderCode($latestIdOrder),
+            'order_code' => $request->order_code,
             'order_date' => now(),
             'order_amount' => $request->total,
             'order_change' =>  $request->change,
@@ -47,7 +47,13 @@ class KasirController extends Controller
             'customer_name' => "John Doe",
         ]);
 
-        foreach ($data as $item) {
+          foreach ($data as $item) {
+            $product = Products::find($item['productId']);
+
+            if ($product) {
+                $product->product_qty -= $item['qty'];
+                $product->save();
+            }
             OrderDetails::create([
                 'order_id' => $order->id,
                 'product_id' => $item['productId'],
@@ -55,6 +61,7 @@ class KasirController extends Controller
                 'order_price' => $item['price'],
                 'order_subtotal' => $item['qty'] * $item['price'],
             ]);
+            // return $product;
         }
         // return $request;
 

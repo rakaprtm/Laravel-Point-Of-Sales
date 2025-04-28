@@ -9,7 +9,7 @@
                     <div>
                        <a href="{{ url()->previous() }}" class="btn btn-danger me-2"><i class="bi bi-back me-1"></i>Back</a>
 
-                        <a href="{{ route('print', $order->id) }}" class="btn btn-warning"><i class="bi bi-printer me-1"></i>Print</a>
+                        <a href="{{ route('print', $order->id) }}" class="btn btn-warning"><i class="bi bi-printer me-1"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-12  mx-auto">

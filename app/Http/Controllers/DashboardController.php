@@ -27,7 +27,7 @@ class DashboardController extends Controller
                             ->get();
 
     $incomeExpense = [
-        'labels' => ['January', 'February', 'March', 'April'], // contoh
+        'labels' => ['January', 'February', 'March', 'April'], 
         'income' => [1000000, 1500000, 1250000, 2000000],
         'expenses' => [500000, 700000, 600000, 800000],
     ];
@@ -36,7 +36,7 @@ class DashboardController extends Controller
     $bestSellingProducts = OrderDetails::selectRaw('product_id, SUM(qty) as total_qty')
         ->groupBy('product_id')
         ->orderByDesc('total_qty')
-        ->with('product') // relasi ke model product
+        ->with('product') 
         ->take(5)
         ->get();
 
@@ -47,7 +47,7 @@ class DashboardController extends Controller
         'todayOrders',
         'weeklyOrders',
         'incomeExpense',
-        'bestSellingProducts' // kirim ke view
+        'bestSellingProducts'
     ));
 }
 

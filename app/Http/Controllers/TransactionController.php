@@ -93,7 +93,7 @@ class TransactionController extends Controller
 // }
  public function store(Request $request)
     {
-        // return $request->all();
+        return $request->all();
         $request->validate([
             'cart' => 'required',
             'cash' => 'required|numeric|min:0',
@@ -114,7 +114,22 @@ class TransactionController extends Controller
             'customer_name' => "John Doe",
         ]);
 
+        // foreach ($data as $item) {
+        //     OrderDetails::create([
+        //         'order_id' => $order->id,
+        //         'product_id' => $item['productId'],
+        //         'qty' => $item['qty'],
+        //         'order_price' => $item['price'],
+        //         'order_subtotal' => $item['qty'] * $item['price'],
+        //     ]);
+        // }
+        
         foreach ($data as $item) {
+            $product = Products::find($item['productId']);
+            if ($product) {
+                $product->product_qty -= $item['qty'];
+                $product->save();
+            }
             OrderDetails::create([
                 'order_id' => $order->id,
                 'product_id' => $item['productId'],
@@ -122,7 +137,9 @@ class TransactionController extends Controller
                 'order_price' => $item['price'],
                 'order_subtotal' => $item['qty'] * $item['price'],
             ]);
+
         }
+
         // return $request;
 
         Alert::success('Success', 'Transaction successfully');
