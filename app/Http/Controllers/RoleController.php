@@ -20,7 +20,7 @@ class RoleController extends Controller
 
     public function create()
     {
-        return view('roles.create');
+        return view('role.create');
     }
 
     public function store(Request $request)
@@ -39,7 +39,7 @@ class RoleController extends Controller
     public function edit($id)
     {
         $Role = Role::findOrFail($id);
-        return view('roles.edit', compact('Role'));
+        return view('role.edit', compact('Role'));
     }
 
     public function update(Request $request, string $id)

@@ -11,7 +11,7 @@
                         <h5 class="card-title text-center">@isset($title) {{ $title }} @endisset</h5>
 
                         @if(session('success'))
-                            <div class="alert alert-success">
+                            <div align="center" class="alert alert-success">
                                 {{ session('success') }}
                             </div>
                         @endif

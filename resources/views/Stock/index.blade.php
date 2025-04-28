@@ -26,7 +26,6 @@
                                         <th>Name</th>
                                         <th>Price</th>
                                         <th>Status</th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody align="center">

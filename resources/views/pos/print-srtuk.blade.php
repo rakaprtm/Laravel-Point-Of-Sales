@@ -18,7 +18,8 @@
 <body onload="window.print()">
     <div class="text-center mb-2">
         <div align="center" class="sb">
-            <img src="asset/img/resto.png'" alt="logo" style="width: 120px; height: auto;">
+            <!-- <img src="{{ asset('img/resto.png') }}" alt="Profile" class="rounded-circle" /> -->
+            <img src="{{ asset('img/resto.png') }}" alt="logo" style="width: 120px; height: auto;">
         </div>
         <h6 class="fw-bold mb-3 fs-1"><i>STARBOY</i></h6>
         <small class="fw-bold">JL. DR.TAUBAT N0. 420, BARCELONA</small><br>

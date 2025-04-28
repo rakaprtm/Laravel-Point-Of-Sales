@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Add User')
+@section('title', 'ADD USER')
 
 @section('content')
 <div class="container mt-4">
@@ -8,7 +8,7 @@
             <div class="col-lg-6">
                 <div class="card shadow">
                     <div class="card-body">
-                        <h5 class="card-title text-center">Add User</h5>
+                        <h5 class="card-title text-center">USER</h5>
 
                         <form action="{{ route('users.store') }}" method="POST">
                             @csrf

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Data Users')
+@section('title', 'USERS')
 
 @section('content')
 <div class="container mt-4">

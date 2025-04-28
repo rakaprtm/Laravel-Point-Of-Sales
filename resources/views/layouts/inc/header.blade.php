@@ -1,9 +1,10 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="" />
-            <span class="d-none d-lg-block text-danger">REST🍔RASI</span>
+        <a href="" class="logo d-flex align-items-center text-decoration-none">
+        <img src="assets/img/logo.png" alt="" />
+        <span class="d-none d-lg-block text-danger">REST🍔RASI</span>
         </a>
+
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
     <!-- End Logo -->
@@ -47,7 +48,7 @@
                     href="#"
                     data-bs-toggle="dropdown"
                 >
-                    <img src="{{ asset('img/logoppkd.png') }}" alt="Profile" class="rounded-circle" />
+                    <img src="{{ asset('img/resto.png') }}" alt="Profile" class="rounded-circle" />
 
                     <span class="d-none d-md-block dropdown-toggle ps-2"
                         >@if(auth()->check())

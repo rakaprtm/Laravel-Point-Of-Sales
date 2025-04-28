@@ -28,32 +28,44 @@ class AuthController extends Controller
     }
 
     public function actionLogin(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-            'role' => 'required|exists:roles,id'
-        ]);
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+        'role' => 'required|exists:roles,id'
+    ]);
 
-        $credentials = $request->only('email', 'password');
+    $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            $selectedRoleId = $request->input('role');
-            if (!$user->roles->contains('id', $selectedRoleId)) {
-                Auth::logout();
-                Alert::toast('Role invalid!', 'error');
-                return back()->withInput();
-            }
-            session(['selected_role' => $user->roles->firstWhere('id', $selectedRoleId)->name]);
-            
-            Alert::success('Welcome Back', 'You have successfully logged in!');
-            return redirect('dashboard');
-        } else {
-            Alert::toast('Incorrect email or password!', 'error');
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+        $selectedRoleId = $request->input('role');
+
+        // Cek apakah user punya role yang dipilih
+        if (!$user->roles->contains('id', $selectedRoleId)) {
+            Auth::logout();
+            Alert::toast('Role invalid!', 'error');
             return back()->withInput();
         }
+
+        $selectedRole = $user->roles->firstWhere('id', $selectedRoleId)->name;
+        session(['selected_role' => $selectedRole]);
+
+        Alert::success('Welcome Back', 'You have successfully logged in!');
+
+        // Redirect berdasarkan role
+        if ($selectedRole === 'Kasir') {
+            return redirect()->route('dashboard.index');
+        } else {
+            return redirect()->route('dashboard.index');
+        }
+
+    } else {
+        Alert::toast('Incorrect email or password!', 'error');
+        return back()->withInput();
     }
+}
+
 
     public function logout()
     {

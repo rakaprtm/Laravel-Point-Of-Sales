@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Edit User')
+@section('title', 'USER EDIT')
 @section('content')
 <div class="container mt-4">
     <section class="section">
@@ -7,7 +7,7 @@
             <div class="col-lg-8">
                 <div class="card shadow">
                     <div class="card-body">
-                        <h5 class="card-title text-center">EDIT USER</h5>
+                        <h5 class="card-title text-center">USER</h5>
 
                         <form action="{{ route('users.update', $user->id) }}" method="POST">
                             @csrf
