@@ -17,7 +17,7 @@
         background-color: #eee !important; /* Latar belakang header abu-abu muda */
         color: #000 !important;
     }
-        
+
     }
 
     /* Mengatur layout laporan untuk mode print */
@@ -67,10 +67,12 @@
                                     <a href="{{ route('pos.index') }}" class="btn btn-secondary">Reset</a>
                                 </div>
                                 <div class="col-md-3">
-                                    <button type="button" class="btn btn-success" id="print-btn">Print</button>
-                                </div>
-                            </form>
+                                   <a href="{{ route('print.order', ['filter' => request('filter'), 'date' => request('date')]) }}" target="_blank" class="btn btn-success" id="print-btn">Print</a>
 
+
+                                </div>
+
+                            </form>
                             <table class="table table-bordered table-striped table-hover ">
                                 <thead align="center" class="table-dark">
                                     <tr>

@@ -57,4 +57,5 @@ Route::middleware(['auth','role:Kasir'])->get('/kasir', [KasirController::class,
 Route::middleware(['auth', 'role:Kasir'])->post('/kasir', [KasirController::class, 'store'])->name('kasir.store');
 Route::middleware(['auth', 'role:Administrator,Pimpinan,Kasir'])->get('/stock', [ProductController::class, 'stockproducts']);
 
+Route::get('/print-order', [TransactionController::class, 'printOrder'])->name('print.order');
 

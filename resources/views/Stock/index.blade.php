@@ -30,8 +30,9 @@
                                     </tr>
                                 </thead>
                                 <tbody align="center">
-                                    @php $no=1; @endphp @foreach ($products as
-                                    $data)
+                                    @php $no = 1; @endphp
+
+                                    @foreach ($products as $data)
                                     <tr>
                                         <td>{{ $no++ }}</td>
                                         <td>

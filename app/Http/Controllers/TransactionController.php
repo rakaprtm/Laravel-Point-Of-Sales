@@ -123,7 +123,7 @@ class TransactionController extends Controller
         //         'order_subtotal' => $item['qty'] * $item['price'],
         //     ]);
         // }
-        
+
         foreach ($data as $item) {
             $product = Products::find($item['productId']);
             if ($product) {
@@ -220,6 +220,33 @@ class TransactionController extends Controller
     $orderDetails = OrderDetails::with('product')->where('order_id', $id)->get();
     return view('pos.print-srtuk', compact('order', 'orderDetails'));
     }
+
+public function printOrder(Request $request)
+{
+    $filter = $request->input('filter');
+    $date = $request->input('date') ? Carbon::parse($request->input('date')) : Carbon::today();
+
+    $query = Orders::select('order_code', 'order_date', 'order_amount');
+
+    if ($filter == 'daily') {
+        $query->whereDate('order_date', $date);
+    } elseif ($filter == 'weekly') {
+        $startOfWeek = $date->copy()->startOfWeek();
+        $endOfWeek = $date->copy()->endOfWeek();
+        $query->whereBetween('order_date', [$startOfWeek, $endOfWeek]);
+    } elseif ($filter == 'monthly') {
+        $query->whereMonth('order_date', $date->month)
+              ->whereYear('order_date', $date->year);
+    }
+
+    $datas = $query->orderBy('id', 'desc')->get();
+
+    return view('pos.print-order', compact('datas'));
+}
+
+
+
+
 
 
 
